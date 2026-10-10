@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="theme-color" content="#12695f" />
+<title>Пробная загрузка PDF и фото — Наше здоровье</title>
+<style>
+:root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#193a33;background:#f5f8f6}*{box-sizing:border-box}body{margin:0}.app{max-width:660px;margin:0 auto;padding:18px 14px 72px}.header{display:flex;align-items:center;gap:12px}.heart{width:48px;height:48px;border-radius:15px;background:#d8eee9;display:grid;place-items:center;font-size:27px}h1{font-size:22px;margin:0}.sub,.muted{color:#698078;font-size:13px;line-height:1.5}.warn{padding:14px;border-radius:13px;border:1px solid #ead6a9;background:#fff7e6;color:#7a591c;line-height:1.5;margin:18px 0}.card{background:white;border:1px solid #deebe6;border-radius:19px;padding:18px;margin:14px 0;box-shadow:0 5px 16px #15543b0a}.head{display:flex;justify-content:space-between;align-items:center;gap:8px}.pill{font-size:11px;color:#74511e;background:#fff0cf;border-radius:30px;padding:5px 10px;font-weight:750}.btn{display:inline-block;text-align:center;font:700 15px system-ui;color:#186257;background:white;border:1px solid #bed4ca;border-radius:12px;padding:12px 15px;cursor:pointer;max-width:100%}.primary{background:#166e60;color:white;border-color:#166e60}.danger{color:#9d2e2e;border-color:#eccccc}.btn:disabled{opacity:.5}.btnrow{display:flex;gap:8px;flex-wrap:wrap}h2{font-size:19px;margin:0 0 11px}label{display:block;font-weight:600;font-size:13px;margin:15px 0 7px}select,input{font:16px system-ui;border:1px solid #c7d8d0;padding:11px;border-radius:10px;width:100%}.item{border-top:1px solid #e1ebe6;padding:13px 0}.itemname{font-weight:760}.msg{margin:12px 0;white-space:pre-wrap;color:#486c5a;font-size:14px;line-height:1.5}.error{color:#b52c2c}.checkline{display:flex;align-items:flex-start;gap:9px;margin:12px 0;font-size:13px;font-weight:500;line-height:1.45}.checkline input{width:auto;margin:4px 0 0;flex:none;accent-color:#166e60}.hidden{display:none!important}.info{font-size:12px;color:#7e8f89;margin-top:12px}a{color:#166e60}
+</style>
+</head>
+<body><div class="app">
+<div class="header"><div class="heart">♡</div><div style="flex:1"><h1>Загрузка фото и PDF</h1><div class="sub">Наше здоровье · пробный архив</div></div><span class="pill">ДЕМО</span></div>
+<div class="warn"><b>Только вымышленные документы.</b> Хранилище находится в Германии. Пока не загружайте фотографии медицинских бланков, настоящие анализы, имена и другие личные сведения. Эта страница сохраняет файлы в тестовом облаке. Проверь только на специально подготовленном учебном PDF или вымышленной картинке.</div>
+<section class="card" id="noauth"><h2>Нужен вход</h2><p>Откройте основное приложение, войдите в аккаунт и вернитесь сюда.</p><a class="btn primary" href="./">Перейти в «Наше здоровье»</a></section>
+<section id="logged" class="hidden"><div class="head"><span class="muted" id="account"></span><a class="btn" href="./">← В приложение</a></div>
+<section class="card"><h2>Добавить тестовый документ</h2><p class="muted">Кнопка создаст картинку с крупной надписью «ТЕСТОВЫЙ ДОКУМЕНТ». В ней нет никакой персональной информации.</p>
+<label for="profile">Выбери профиль</label><select id="profile"></select>
+<div class="btnrow" style="margin-top:14px"><button class="btn primary" id="add">Создать тестовый документ</button><button class="btn" id="refresh">Обновить список</button></div>
+<div id="status" class="msg" role="status"></div></section>
+<section class="card"><h2>Проверить загрузку PDF или фото</h2>
+<p class="muted">Скачай учебный PDF из чата, затем выбери его здесь. Проверяем добавление своего файла, сохранение исходного формата и просмотр.</p>
+<label for="uploadProfile">В какой тестовый профиль</label><select id="uploadProfile"></select>
+<label for="uploadFile">Выбрать учебный PDF или картинку</label><input id="uploadFile" type="file" accept="application/pdf,image/jpeg,image/png,image/webp,.pdf,.jpg,.jpeg,.png,.webp" />
+<label for="uploadTitle">Название учебного документа</label><input id="uploadTitle" type="text" maxlength="100" placeholder="Например: Учебный анализ" value="Учебный документ" />
+<label for="uploadDate">Дата учебного документа (необязательно)</label><input id="uploadDate" type="date" />
+<label class="checkline"><input type="checkbox" id="noRealData"/><span>Подтверждаю: в выбранном файле <b>нет настоящих медицинских и персональных данных</b>.</span></label>
+<div class="btnrow"><button class="btn primary" id="upload">Загрузить учебный файл</button></div>
+<div id="uploadStatus" class="msg" role="status"></div>
+</section>
+<section class="card"><div class="head"><h2>Сохранённые оригиналы</h2><span id="total" class="pill">0</span></div><div id="documents" class="muted">Загружаем…</div></section>
+<section class="card"><h2>Что проверяем</h2><p class="muted">Здесь проверяем загрузку своих учебных PDF/фото, облачное хранение и открытие оригиналов. ИИ-распознавание текста из документов и отправка доступа врачу пока не подключены.</p></section>
+</section></div>
+<script type="module">
+import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+const db=createClient('https://etmhwgfchkyjqlaakuzc.supabase.co','sb_publishable_QuqnhvGKZX9aw5QYiJmhwg_6Bo4sDC0',{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const bucket='health-demo-documents', $=s=>document.querySelector(s);
+const state={user:null,people:[],documents:[],busy:false};
+const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function notice(s,err=false){$('#status').textContent=s;$('#status').classList.toggle('error',err)}
+function busy(v){state.busy=v;$('#add').disabled=v;$('#refresh').disabled=v;$('#upload').disabled=v}
+async function refresh(){if(!state.user)return;const [p,d]=await Promise.all([db.from('people').select('id,display_name,relationship').order('created_at'),db.from('documents').select('id,person_id,title,document_date,storage_path,mime_type,created_at').order('created_at',{ascending:false})]);if(p.error||d.error){notice('Не удалось прочитать данные: '+(p.error||d.error).message,true);return;}state.people=p.data||[];state.documents=d.data||[];$('#profile').innerHTML=state.people.map(x=>`<option value="${e(x.id)}">${e(x.display_name)}</option>`).join('');$('#uploadProfile').innerHTML=state.people.map(x=>`<option value="${e(x.id)}">${e(x.display_name)}</option>`).join('');if(!state.people.length){$('#add').disabled=true;$('#upload').disabled=true;notice('Сначала создай два тестовых профиля в основном приложении.',true);}renderDocs();}
+function renderDocs(){const parent=$('#documents');parent.replaceChildren();$('#total').textContent=state.documents.length;if(!state.documents.length){parent.textContent='Здесь пока нет документов. Создай пример выше.';return;}for(const d of state.documents){const row=document.createElement('div');row.className='item';const profile=state.people.find(p=>p.id===d.person_id)?.display_name||'Неизвестный профиль';row.innerHTML=`<div class="itemname">${e(d.title)}</div><div class="muted">${e(profile)} · ${e(d.document_date||'Без даты')}</div><div class="btnrow" style="margin-top:9px"><button class="btn view">Открыть оригинал</button><button class="btn danger remove">Удалить пример</button></div><div class="msg note"></div>`;
+row.querySelector('.view').onclick=async()=>{const {data,error}=await db.storage.from(bucket).createSignedUrl(d.storage_path,90);if(error){row.querySelector('.note').textContent='Ошибка просмотра: '+error.message;return;}const a=document.createElement('a');a.href=data.signedUrl;a.target='_blank';a.rel='noopener noreferrer';a.className='btn';a.textContent='Открыть файл (ссылка на 90 секунд)';row.querySelector('.note').replaceChildren(a)};
+row.querySelector('.remove').onclick=async()=>{if(!confirm('Удалить только этот тестовый документ?'))return;const button=row.querySelector('.remove');button.disabled=true;const {error:storageError}=await db.storage.from(bucket).remove([d.storage_path]);if(storageError){row.querySelector('.note').textContent='Ошибка удаления файла: '+storageError.message;button.disabled=false;return}const {error}=await db.from('documents').delete().eq('id',d.id);if(error){row.querySelector('.note').textContent='Файл удалён, но запись осталась: '+error.message;button.disabled=false;return}await refresh()};parent.append(row)}}
+async function exampleBlob(){const canvas=document.createElement('canvas');canvas.width=950;canvas.height=1200;const ctx=canvas.getContext('2d');ctx.fillStyle='#f0faf7';ctx.fillRect(0,0,950,1200);ctx.fillStyle='#156a5e';ctx.font='bold 74px sans-serif';ctx.textAlign='center';ctx.fillText('ТЕСТОВЫЙ',475,460);ctx.fillText('ДОКУМЕНТ',475,575);ctx.fillStyle='#60746c';ctx.font='34px sans-serif';ctx.fillText('ВЫМЫШЛЕННЫЕ ДАННЫЕ',475,700);return await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Не удалось создать тестовую картинку')),'image/png'))}
+async function addExample(){if(state.busy||!state.user)return;const personId=$('#profile').value;if(!state.people.some(x=>x.id===personId)){notice('Сначала выбери тестовый профиль.',true);return}busy(true);notice('Готовим пример…');let uploadedPath=null;try{const blob=await exampleBlob();const path=`${state.user.id}/${personId}/${crypto.randomUUID()}.png`;const {error:uerr}=await db.storage.from(bucket).upload(path,blob,{contentType:'image/png',upsert:false});if(uerr)throw uerr;uploadedPath=path;const {error:derr}=await db.from('documents').insert({person_id:personId,title:'Тестовый документ — пример',document_date:'2026-10-11',storage_path:path,mime_type:'image/png'});if(derr)throw derr;notice('Пример загружен! Найди его в списке ниже и нажми «Открыть оригинал».');await refresh()}catch(err){if(uploadedPath)await db.storage.from(bucket).remove([uploadedPath]);notice('Не удалось сохранить: '+(err.message||String(err)),true)}finally{busy(false)}}
+// Detect true file type from the file signature rather than trusting the extension or browser MIME.
+async function inspectFile(file){
+ if(file.size===0 || file.size>10*1024*1024)throw new Error('Файл должен быть больше 0 и не более 10 МБ.');
+ const header=new Uint8Array(await file.slice(0,16).arrayBuffer());
+ const match=(arr)=>arr.every((x,i)=>header[i]===x);
+ if(match([0x25,0x50,0x44,0x46,0x2d]))return ['application/pdf','pdf'];
+ if(match([0x89,0x50,0x4e,0x47,0x0d,0x0a,0x1a,0x0a]))return ['image/png','png'];
+ if(match([0xff,0xd8,0xff]))return ['image/jpeg','jpg'];
+ if(match([0x52,0x49,0x46,0x46])&&String.fromCharCode(...header.slice(8,12))==='WEBP')return ['image/webp','webp'];
+ throw new Error('Допускаются только настоящие PDF, JPG, PNG или WEBP.');
+}
+async function uploadPracticeFile(){
+ if(state.busy||!state.user)return;
+ const file=$('#uploadFile').files[0],personId=$('#uploadProfile').value;
+ if(!state.people.some(p=>p.id===personId)){$('#uploadStatus').textContent='Выбери тестовый профиль.';return}
+ if(!file){$('#uploadStatus').textContent='Сначала выбери файл.';return}
+ if(!$('#noRealData').checked){$('#uploadStatus').textContent='Подтверди, что файл вымышленный, без личных данных.';return}
+ const title=$('#uploadTitle').value.trim();if(!title||title.length>100){$('#uploadStatus').textContent='Введи название до 100 символов.';return}
+ busy(true);$('#uploadStatus').textContent='Проверяем и загружаем файл…';let uploadedPath=null;
+ try{
+  const [mime,ext]=await inspectFile(file);
+  const digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',await file.arrayBuffer()))).map(x=>x.toString(16).padStart(2,'0')).join('');
+  const path=`${state.user.id}/${personId}/${digest}.${ext}`;
+  if(state.documents.some(d=>d.storage_path===path))throw new Error('Этот файл уже был загружен для выбранного профиля. Повторно не добавляем.');
+  const {error:uerr}=await db.storage.from(bucket).upload(path,file,{contentType:mime,upsert:false});if(uerr)throw uerr;uploadedPath=path;
+  const date=$('#uploadDate').value||null;
+  const {error:derr}=await db.from('documents').insert({person_id:personId,title,document_date:date,storage_path:path,mime_type:mime});if(derr)throw derr;
+  $('#uploadFile').value='';$('#noRealData').checked=false;
+  await refresh();$('#uploadStatus').textContent='Готово! Учебный файл сохранён. Он появился в списке ниже — нажми «Открыть оригинал».';
+ }catch(err){if(uploadedPath)await db.storage.from(bucket).remove([uploadedPath]);$('#uploadStatus').textContent='Не удалось сохранить: '+(err.message||String(err));}
+ finally{busy(false)}
+}
+$('#add').onclick=addExample;$('#refresh').onclick=refresh;$('#upload').onclick=uploadPracticeFile;
+async function init(){const {data,error}=await db.auth.getSession();if(error){$('#noauth').innerHTML='<h2>Ошибка входа</h2><p>'+e(error.message)+'</p>';return}state.user=data?.session?.user||null;$('#noauth').classList.toggle('hidden',!!state.user);$('#logged').classList.toggle('hidden',!state.user);if(state.user){$('#account').textContent=state.user.email||'';await refresh()}}
+await init();db.auth.onAuthStateChange(()=>setTimeout(init,0));
+</script></body></html>
